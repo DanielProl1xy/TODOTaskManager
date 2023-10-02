@@ -4,26 +4,36 @@ import UI.MainWindow;
 
 public final class ToDoApplication {
 	
+	private static ToDoApplication app;
+	
 	public static void main(String[] args) {
 		
-		ToDoApplication app = new ToDoApplication(args);
+		if(app != null)
+			return;
+		
+		app = new ToDoApplication(args);
 		
 		app.Exec();
 		
 	}
 	
 	private MainWindow window;
-	private String[] args;
 	
-	public ToDoApplication(String[] args) {
-		this.args = args;
+	private ToDoApplication(String[] args_) {
+
 		window = MainWindow.GetInstance();
 	}
 	
-	public int Exec() {
+	private int Exec() {
 	
 		window.setVisible(true);
 		
 		return 0;
+	}	
+
+	private static  String configPath;
+	
+	public static String GetConfigPath() {	
+		return configPath;
 	}
 }

@@ -5,6 +5,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import Core.ToDoApplication;
 import Core.ToDoTask;
 
 import java.awt.GraphicsDevice;
@@ -46,6 +47,8 @@ public final class MainWindow extends JFrame {
 	private MainWindow() {
 		
 		super();
+		
+		System.out.println(ToDoApplication.GetConfigPath());
 		
 		this.setTitle(title);
 		this.setSize(width, height);

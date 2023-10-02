@@ -7,7 +7,7 @@ public class ToDoTask  {
 
 	public String Text;
 	
-	public ActionStatus Status;
+	public TaskStatus Status;
 
 	public LocalDateTime StartTime;
 	public LocalDateTime EndTime;
@@ -16,7 +16,7 @@ public class ToDoTask  {
 	public ToDoTask(String text) {
 		
 		Text = text;
-		Status = ActionStatus.Planned;
+		Status = TaskStatus.Planned;
 	}
 	
 	// Overrides toString function for JList widget

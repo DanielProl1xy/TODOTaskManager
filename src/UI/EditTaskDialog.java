@@ -8,7 +8,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JCheckBox;
 import Core.ToDoTask;
+import Core.TaskStatus;
 
 public class EditTaskDialog extends JDialog {
 	
@@ -17,6 +19,11 @@ public class EditTaskDialog extends JDialog {
 
 	// Containers
 	private JPanel widgetPanel;
+	private JPanel stateSelectPanel;
+	// State selection
+	private JCheckBox plannedCheck;
+	private JCheckBox finishedCheck;
+	private JCheckBox interruptedCheck;
 	
 	// Widgets
 	private JTextField taskText;
@@ -53,6 +60,8 @@ public class EditTaskDialog extends JDialog {
 		task = newTask;
 		
 		taskText.setText(task.Text);
+		
+		switchStatus(task.Status);
 	}
 	
 	private static EditTaskDialog getInstance(MainWindow parent) {
@@ -89,9 +98,19 @@ public class EditTaskDialog extends JDialog {
 		okButton = new JButton("Ok");
 		cancelButton = new JButton("Cancel");
 		
+		stateSelectPanel = new JPanel();
+		plannedCheck = new JCheckBox("Planned");
+		finishedCheck = new JCheckBox("Finished");
+		interruptedCheck = new JCheckBox("Interrupted");
+		
+		stateSelectPanel.add(plannedCheck);
+		stateSelectPanel.add(finishedCheck);
+		stateSelectPanel.add(interruptedCheck);
+		
 		widgetPanel.add(taskText);
 		widgetPanel.add(cancelButton);
 		widgetPanel.add(okButton);
+		widgetPanel.add(stateSelectPanel);
 		
 		this.add(widgetPanel);
 	}
@@ -114,6 +133,30 @@ public class EditTaskDialog extends JDialog {
 			}
 		});
 		
+		plannedCheck.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				onCheckboxSwitched(e);
+			}
+		});
+		
+		finishedCheck.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				onCheckboxSwitched(e);
+			}
+		});
+		
+		interruptedCheck.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				onCheckboxSwitched(e);
+			}
+		});
+		
 		
 	}
 	
@@ -125,7 +168,51 @@ public class EditTaskDialog extends JDialog {
 	
 	private void onCancelButtonClicked() {
 		
+		task = null;
 		this.setVisible(false);
+	}
+	
+	private void onCheckboxSwitched(ActionEvent e) {
+		JCheckBox checked = (JCheckBox) e.getSource();
+		boolean selected = checked.getModel().isSelected();
+		
+		if(!selected) {
+			return;
+		}
+		
+		if(checked == plannedCheck) {
+			switchStatus(TaskStatus.Planned);
+		}
+		else if (checked == finishedCheck) {
+			switchStatus(TaskStatus.Finished);
+		}
+		else if (checked == interruptedCheck) {
+			switchStatus(TaskStatus.Interrupted);
+		}
+	}
+	
+	private void switchStatus(TaskStatus status)
+	{
+		task.Status = status;
+		
+		switch(status)
+		{
+		case Planned:
+			plannedCheck.getModel().setSelected(true);		
+			finishedCheck.getModel().setSelected(false);
+			interruptedCheck.getModel().setSelected(false);
+			break;
+		case Finished:
+			finishedCheck.getModel().setSelected(true);
+			plannedCheck.getModel().setSelected(false);
+			interruptedCheck.getModel().setSelected(false);
+			break;
+		case Interrupted:
+			interruptedCheck.getModel().setSelected(true);
+			finishedCheck.getModel().setSelected(false);
+			plannedCheck.getModel().setSelected(false);
+			break;
+		}
 	}
 
 }
