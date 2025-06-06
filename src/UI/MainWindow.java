@@ -5,7 +5,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import Core.ToDoApplication;
 import Core.ToDoTask;
 
 import java.awt.GraphicsDevice;
@@ -13,10 +12,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.*;
 
 public final class MainWindow extends JFrame {
-	
-	// Singleton pattern
-	private static volatile MainWindow instance;
-	
+		
 	private final int width = 600;
 	private final int height = 500;
 	private final String title = "ToDo tasks manager";
@@ -33,23 +29,10 @@ public final class MainWindow extends JFrame {
 	private JPanel widgetsContainer;
 	private JPanel buttonsContainer;
 	
-	// Singleton pattern
-	public static MainWindow GetInstance() {
-		
-		if(instance == null) {
-			instance = new MainWindow();
-		}
-		
-		return instance;
-	}
-	
-	
-	private MainWindow() {
+	public MainWindow() {
 		
 		super();
-		
-		System.out.println(ToDoApplication.GetConfigPath());
-		
+				
 		this.setTitle(title);
 		this.setSize(width, height);
 		this.setResizable(false);
@@ -86,7 +69,6 @@ public final class MainWindow extends JFrame {
 		widgetsContainer.add(buttonsContainer);
 		
 		this.add(widgetsContainer);		
-		
 	}
 	
 	private void initActions() {

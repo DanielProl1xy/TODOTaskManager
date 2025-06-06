@@ -3,7 +3,6 @@ package UI;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import Core.ToDoTask;
-import Core.ToDoApplication;
 
 public class ToDoListWidget extends JList<ToDoTask> {
 	

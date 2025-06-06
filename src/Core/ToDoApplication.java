@@ -5,6 +5,10 @@ import UI.MainWindow;
 public final class ToDoApplication {
 	
 	private static ToDoApplication app;
+
+	private MainWindow window;
+
+	private String configPath;
 	
 	public static void main(String[] args) {
 		
@@ -15,25 +19,23 @@ public final class ToDoApplication {
 		
 		app.Exec();
 		
+	}	
+
+	public String GetConfigPath() {	
+		return configPath;
 	}
-	
-	private MainWindow window;
+
+	public ToDoApplication GetApp() {
+		return app;
+	}
 	
 	private ToDoApplication(String[] args_) {
 
-		window = MainWindow.GetInstance();
+		window = new MainWindow();
 	}
 	
-	private int Exec() {
-	
-		window.setVisible(true);
-		
-		return 0;
+	private void Exec() {
+		window.setVisible(true);	
 	}	
-
-	private static  String configPath;
 	
-	public static String GetConfigPath() {	
-		return configPath;
-	}
 }
