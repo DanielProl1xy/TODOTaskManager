@@ -8,7 +8,7 @@ public final class ToDoApplication {
 
 	private MainWindow window;
 
-	private String configPath;
+	private final String savingPath = "./tasks.bin";
 	
 	public static void main(String[] args) {
 		
@@ -18,14 +18,14 @@ public final class ToDoApplication {
 		app = new ToDoApplication(args);
 		
 		app.Exec();
-		
+
 	}	
 
-	public String GetConfigPath() {	
-		return configPath;
+	public String GetSavingPath() {	
+		return savingPath;
 	}
 
-	public ToDoApplication GetApp() {
+	public static ToDoApplication GetApp() {
 		return app;
 	}
 	
@@ -35,7 +35,8 @@ public final class ToDoApplication {
 	}
 	
 	private void Exec() {
+		System.out.println("INFO: Starting app");
 		window.setVisible(true);	
-	}	
+	}
 	
 }
