@@ -157,7 +157,6 @@ public class EditTaskDialog extends JDialog {
 			}
 		});
 		
-		
 	}
 	
 	private void onOkButtonClicked() {
