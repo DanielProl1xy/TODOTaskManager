@@ -15,10 +15,12 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.*;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.ZoneOffset;
@@ -222,8 +224,10 @@ public final class MainWindow extends JFrame {
 				else break;
 			}
 			System.out.println("INFO: Loaded " + taskList.size() + " tasks");
-		} catch (IOException x) {
-			System.err.println(x);
+		} catch (NoSuchFileException e) {
+			System.out.println("INFO: No tasks to load");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -232,14 +236,20 @@ public final class MainWindow extends JFrame {
 
 		System.out.println("INFO: Saving tasks");
 
-		// overwrite existing file
-		// writing in a binary format 
 		Path savePath = Paths.get(ToDoApplication.GetApp().GetSavingPath());
-		try {
-			Files.deleteIfExists(savePath);
-		} catch (IOException e) {
-			System.err.println(e);
+		Path backupPath = Paths.get(ToDoApplication.GetApp().GetSavingPath() + ".old");
+
+		File saveFIle = new File(ToDoApplication.GetApp().GetSavingPath());
+		if(saveFIle.exists()) {
+			try {
+				Files.deleteIfExists(backupPath);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			File backupFile = new File(ToDoApplication.GetApp().GetSavingPath() + ".old");
+			saveFIle.renameTo(backupFile);
 		}
+
 		try (OutputStream out = new BufferedOutputStream(
 			Files.newOutputStream(savePath, CREATE, APPEND))) {
 
